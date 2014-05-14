@@ -1,0 +1,20 @@
+Xilinx PWM controller
+
+Required properties:
+- compatible: should be "xlnx,pwm-xlnx"
+- add a clock source to the description
+
+Examples:
+
+		axi_timer_0: timer@42800000 {
+			clock-frequency = <100000000>;
+			clocks = <&clkc 15>;
+			compatible = "xlnx,xlnx-pwm";
+			reg = <0x42800000 0x10000>;
+			xlnx,count-width = <0x20>;
+			xlnx,gen0-assert = <0x1>;
+			xlnx,gen1-assert = <0x1>;
+			xlnx,one-timer-only = <0x0>;
+			xlnx,trig0-assert = <0x1>;
+			xlnx,trig1-assert = <0x1>;
+		} ;
