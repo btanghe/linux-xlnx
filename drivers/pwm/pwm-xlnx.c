@@ -1,8 +1,8 @@
 /*
  * pwm-xlnx driver
- * Tested on zedboard - axi timer v2.00a
+ * Tested on zedboard - axi timer v2.00a - test
  *
- * Copyright (C) 2014 Thomas more
+ * Copyright (C) 2014 Thomas More
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,7 +17,7 @@
 #include <linux/platform_device.h>
 #include <linux/pwm.h>
 
-/*mmio regiser mapping*/
+/* mmio regiser mapping */
 
 #define OFFSET		0x10
 #define DUTY		0x14
@@ -52,8 +52,8 @@ static int xlnx_pwm_config(struct pwm_chip *chip,
 
 	pc = container_of(chip, struct xlnx_pwm_chip, chip);
 
-	iowrite32(duty_ns/pc->scaler - 2, pc->mmio_base + DUTY);
-	iowrite32(period_ns/pc->scaler - 2, pc->mmio_base + PERIOD);
+	iowrite32((duty_ns/pc->scaler) - 2, pc->mmio_base + DUTY);
+	iowrite32((period_ns/pc->scaler) - 2, pc->mmio_base + PERIOD);
 
 	return 0;
 }
@@ -116,7 +116,6 @@ static int xlnx_pwm_probe(struct platform_device *pdev)
 
 	pwm = devm_kzalloc(&pdev->dev, sizeof(*pwm), GFP_KERNEL);
 	if (!pwm) {
-		dev_err(&pdev->dev, "failed to allocate memory\n");
 		return -ENOMEM;
 	}
 
@@ -129,6 +128,7 @@ static int xlnx_pwm_probe(struct platform_device *pdev)
 		return PTR_ERR(clk);
 	}
 
+	/* catch the difference between the clock and the basic time base ns */
 	pwm->scaler = (int)1000000000/clk_get_rate(clk);
 
 	r = platform_get_resource(pdev, IORESOURCE_MEM, 0);
@@ -166,7 +166,7 @@ static int xlnx_pwm_remove(struct platform_device *pdev)
 {
 
 	struct xlnx_pwm_chip *pc;
-	pc  = platform_get_drvdata(pdev);
+	pc = platform_get_drvdata(pdev);
 
 	if (WARN_ON(!pc))
 		return -ENODEV;
