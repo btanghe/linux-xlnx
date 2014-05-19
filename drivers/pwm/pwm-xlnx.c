@@ -1,6 +1,6 @@
 /*
  * pwm-xlnx driver
- * Tested on zedboard - axi timer v2.00a - test
+ * Tested on zedboard - axi timer v2.00a
  *
  * Copyright (C) 2014 Thomas More
  *
